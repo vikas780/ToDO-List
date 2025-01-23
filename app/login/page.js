@@ -46,11 +46,12 @@ export default function LoginForm() {
         password: values.password,
         redirect: false,
       })
-
+      console.log('Result from login', result)
       if (result?.ok) {
         if (result.token) {
           dispatch(setToken(result.token))
         }
+
         toast.success('Redirecting to Tasks')
         router.push('/tasks')
       } else {
@@ -65,12 +66,14 @@ export default function LoginForm() {
 
   return (
     <div className='container mx-auto max-w-md mt-10 p-6 bg-white rounded-lg shadow-md'>
-      <h2 className='flex justify-center font-semibold text-xl p-2'>Login</h2>
+      <h2 className='flex justify-center font-semibold text-xl p-2 dark:text-black'>
+        Login
+      </h2>
       <form onSubmit={handleSubmit} className='space-y-4'>
         <div className='mb-3'>
           <label
             htmlFor='email'
-            className='block text-grey-700 font-medium mb-2'
+            className='block text-grey-700 font-medium mb-2 dark:text-black'
           >
             Email
           </label>
@@ -80,7 +83,7 @@ export default function LoginForm() {
             name='email'
             value={values.email}
             onChange={handleChange}
-            className='w-full px-3 py-2 border border-gray-300 rounded-md'
+            className='w-full px-3 py-2 border border-gray-300 rounded-md dark:bg-white dark:text-black'
             required
           />
           {formErrors.email && (
@@ -90,7 +93,7 @@ export default function LoginForm() {
         <div className='mb-3'>
           <label
             htmlFor='password'
-            className='block text-grey-700 font-medium mb-2'
+            className='block text-grey-700 font-medium mb-2 dark:text-black'
           >
             Password
           </label>
@@ -100,7 +103,7 @@ export default function LoginForm() {
             name='password'
             value={values.password}
             onChange={handleChange}
-            className='w-full px-3 py-2 border border-gray-300 rounded-md'
+            className='w-full px-3 py-2 border border-gray-300 rounded-md dark:bg-white dark:text-black'
             required
           />
           {formErrors.password && (
@@ -114,7 +117,7 @@ export default function LoginForm() {
         >
           {loading ? 'Submitting...' : 'Submit'}
         </button>
-        <p>
+        <p className='dark:text-black'>
           Not a member?{' '}
           <Link href='/register'>
             <span className='text-blue-800 hover:text-blue-500 font-semibold'>

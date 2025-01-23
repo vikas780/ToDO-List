@@ -3,9 +3,11 @@ const Shimmer = () => {
 
   return (
     <div className='p-4 mx-auto lg:max-w-[87rem] sm:max-w-full'>
-      <h2 className='text-4xl font-bold text-gray-800 mb-12'>All Tasks</h2>
+      <h2 className='text-4xl font-bold text-gray-800 mb-12 dark:text-white'>
+        All Tasks
+      </h2>
 
-      <div className='flex px-4 py-4 rounded-md border-2 animate-pulse bg-gray-200 focus-within:border-blue-500 overflow-hidden max-w-md mx-auto font-[sans-serif] mt-2'></div>
+      <div className='flex px-4 py-4 rounded-md border-2 animate-pulse bg-gray-200 dark:bg-gray-500 focus-within:border-blue-500 overflow-hidden max-w-md mx-auto font-[sans-serif] mt-2'></div>
       {/* Shimmer for Filter & Actions Section */}
       <div className='mt-4 flex justify-between items-center gap-4'>
         <div className='w-1/3'>

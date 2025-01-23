@@ -21,11 +21,11 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang='en'>
+    <html lang='en' suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased dark:bg-gray-900`}
       >
-        <main className='lg:max-w-[80rem] mx-auto mt-2'>
+        <main className='lg:max-w-[80rem] mx-auto mt-2 dark:bg-gray-900'>
           <ClientLayout>{children}</ClientLayout>
         </main>
       </body>
