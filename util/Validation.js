@@ -7,10 +7,10 @@ export const ValidateInputs = (inputs) => {
     errors.email = 'Please enter a valid email address.'
   }
 
-  // if (inputs.password && !passwordRegex.test(inputs.password)) {
-  //   errors.password =
-  //     'Password must be at least 6 characters long and contain both uppercase and lowercase letters.'
-  // }
+  if (inputs.password && !passwordRegex.test(inputs.password)) {
+    errors.password =
+      'Password must be at least 6 characters long and contain both uppercase and lowercase letters.'
+  }
 
   return errors
 }
