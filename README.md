@@ -20,6 +20,7 @@ yarn dev
 | Filter All,Active, Completed | &#10004; |
 | Bulk remove all completed tasks f| &#10004; | 
 | Delete Task | &#10004; | 
+| Update Task | &#10004; | 
 | Create Task form | &#10004; | 
 | Login/Register Form validation (currently password is not active for login for testing purpose) | &#10004; | 
 
