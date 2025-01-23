@@ -6,7 +6,7 @@ import Link from 'next/link'
 const Tasklayout = ({ children }) => {
   return (
     <div>
-      <div className='flex justify-between'>
+      <div className='flex justify-between p-4'>
         <Link href={'/tasks'}>
           <Image
             className='dark:invert'
@@ -17,7 +17,7 @@ const Tasklayout = ({ children }) => {
           />
         </Link>
         <button
-          onClick={signOut}
+          onClick={() => signOut({ callbackUrl: '/' })}
           className='text-white font-semibold bg-slate-700 p-2 rounded hover:bg-slate-900 '
         >
           LogOut
