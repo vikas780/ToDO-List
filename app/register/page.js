@@ -57,14 +57,14 @@ export default function RegisterForm() {
 
   return (
     <div className='container mx-auto max-w-md mt-10 p-6 bg-white rounded-lg shadow-md'>
-      <h2 className='flex justify-center font-semibold text-xl p-2'>
+      <h2 className='flex justify-center font-semibold text-xl p-2 dark:text-black'>
         Register
       </h2>
       <form onSubmit={handleSubmit} className='space-y-4'>
         <div className='mb-3'>
           <label
             htmlFor='name'
-            className='block text-grey-700 font-medium mb-2'
+            className='block text-grey-700 font-medium mb-2 dark:text-black'
           >
             Username
           </label>
@@ -73,14 +73,14 @@ export default function RegisterForm() {
             name='name'
             value={values.name}
             onChange={handleChange}
-            className='w-full px-3 py-2 border border-gray-300 rounded-md'
+            className='w-full px-3 py-2 border border-gray-300 rounded-md dark:bg-white dark:text-black'
             required
           />
         </div>
         <div className='mb-3'>
           <label
             htmlFor='email'
-            className='block text-grey-700 font-medium mb-2'
+            className='block text-grey-700 font-medium mb-2 dark:text-black'
           >
             Email
           </label>
@@ -89,7 +89,7 @@ export default function RegisterForm() {
             name='email'
             value={values.email}
             onChange={handleChange}
-            className='w-full px-3 py-2 border border-gray-300 rounded-md'
+            className='w-full px-3 py-2 border border-gray-300 rounded-md dark:bg-white dark:text-black'
             required
           />
           {formErrors.email && (
@@ -99,7 +99,7 @@ export default function RegisterForm() {
         <div className='mb-3'>
           <label
             htmlFor='password'
-            className='block text-grey-700 font-medium mb-2'
+            className='block text-grey-700 font-medium mb-2 dark:text-black'
           >
             Password
           </label>
@@ -108,7 +108,7 @@ export default function RegisterForm() {
             name='password'
             value={values.password}
             onChange={handleChange}
-            className='w-full px-3 py-2 border border-gray-300 rounded-md'
+            className='w-full px-3 py-2 border border-gray-300 rounded-md dark:bg-white dark:text-black'
             required
           />
           {formErrors.password && (
@@ -122,7 +122,7 @@ export default function RegisterForm() {
         >
           {loading ? 'Submitting...' : 'Submit'}
         </button>
-        <p>
+        <p className='dark:text-black'>
           Already a member?{' '}
           <Link href='/login'>
             <span className='text-blue-800 hover:text-blue-500 font-semibold'>

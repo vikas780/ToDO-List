@@ -39,9 +39,6 @@ const DashboardStats = ({ data }) => {
       bcg: 'bg-orange-200',
     },
   ]
-  // if (status === 'loading') {
-  //   return <p>Loading...</p>
-  // }
 
   return (
     <section>

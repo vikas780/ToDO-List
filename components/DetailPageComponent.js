@@ -26,9 +26,6 @@ const DetailPageComponent = ({ task, token }) => {
     await dispatch(deleteTask({ taskId: task._id, token })).unwrap()
     setAfterDelete(null)
     router.push('/tasks')
-
-    // const updatedTasks = task.filter((t) => t._id !== task._id)
-    // setAfterDelete(updatedTasks)
   }
   if (!afterDelete) {
     return (

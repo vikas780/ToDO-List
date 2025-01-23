@@ -72,7 +72,6 @@ const AddTask = ({ taskToEdit = null }) => {
         await dispatch(createTask({ task, token })).unwrap()
         router.push('/tasks')
       }
-      // Redirect to /tasks after successful operation
     } catch (error) {
       console.error('Error:', error)
     }

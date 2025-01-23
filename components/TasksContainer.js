@@ -47,9 +47,6 @@ const TasksContainer = ({ data, token }) => {
 
   const handleUndo = async () => {
     if (lastDeletedTask) {
-      // Optimistically update the tasks state
-      setTasks((prevTasks) => [lastDeletedTask, ...(prevTasks || [])])
-
       const { name, description, status } = lastDeletedTask
 
       try {
@@ -58,14 +55,8 @@ const TasksContainer = ({ data, token }) => {
           createTask({ task: { name, description, status }, token })
         ).unwrap()
         window.location.reload()
-        // Redirect to the newly created task's page
       } catch (error) {
         console.error('Failed to restore the task:', error)
-
-        // Revert the optimistic update if the API call fails
-        setTasks((prevTasks) =>
-          prevTasks.filter((task) => task._id !== lastDeletedTask.id)
-        )
       }
 
       // Clear the deleted task from state after handling undo

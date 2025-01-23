@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { toast } from 'react-toastify'
-import ApiClient from '@/util/ApiClient'
 import axios from 'axios'
 
 const defaultState = {
