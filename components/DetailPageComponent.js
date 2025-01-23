@@ -52,8 +52,14 @@ const DetailPageComponent = ({ task, token }) => {
         <div>
           <div className='mt-4'>
             <h3
-              id='task-description'
+              id='task-title'
               className='text-xl font-bold text-gray-800 dark:text-gray-200'
+            >
+              {afterDelete?.name}
+            </h3>
+            <h3
+              id='task-description'
+              className='text-lg underline font-bold text-gray-800 dark:text-gray-200 mt-4'
             >
               Task Description:
             </h3>
