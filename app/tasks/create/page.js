@@ -31,23 +31,6 @@ const AddTask = ({ taskToEdit = null }) => {
     }
   }, [taskToEdit])
 
-  const validateForm = () => {
-    const errors = {}
-    let isValid = true
-
-    if (task.name.length > 50) {
-      errors.name = 'Title must be less than 50 characters.'
-      isValid = false
-    }
-    if (task.description.length > 256) {
-      errors.description = 'Description must be less than 256 characters.'
-      isValid = false
-    }
-
-    setErrors(errors)
-    return isValid
-  }
-
   const handleSubmit = async (e) => {
     e.preventDefault()
 
@@ -56,10 +39,28 @@ const AddTask = ({ taskToEdit = null }) => {
       return
     }
 
-    if (!validateForm()) {
+    // Initialize validation errors
+    const formErrors = {}
+
+    if (!task.name.trim()) {
+      formErrors.name = 'Task name is required.'
+    } else if (task.name.length > 50) {
+      formErrors.name = 'Title must be less than 50 characters.'
+    }
+
+    if (!task.description.trim()) {
+      formErrors.description = 'Task description is required.'
+    } else if (task.description.length > 120) {
+      formErrors.description = 'Description must be less than 256 characters.'
+    }
+
+    // If there are validation errors, update the state and stop submission
+    if (Object.keys(formErrors).length > 0) {
+      setErrors(formErrors)
       return
     }
 
+    // Proceed with task submission
     try {
       if (taskToEdit) {
         // Edit Task
