@@ -44,15 +44,15 @@ const TasksContainer = ({ data }) => {
     <section>
       <div className='p-4 mx-auto lg:max-w-[87rem] sm:max-w-full mb-16'>
         <header>
-          <h2 className='text-4xl font-bold text-gray-800 mb-12'>All Tasks</h2>
+          <p className='text-4xl font-bold text-gray-800 mb-12'>All Tasks</p>
         </header>
 
         {/* Search Bar */}
         <SearchBar OnSearch={handleSearch} />
 
         {/* Action Menu */}
-        <div className='mt-4 flex justify-between items-center gap-4'>
-          <div>
+        <div className='mt-4 flex flex-col sm:flex-row md:flex-row items-start gap-2 md:gap-6 md:justify-between'>
+          <div className='flex-1'>
             <label htmlFor='task-filter' className='font-semibold'>
               Actions:
             </label>
@@ -60,7 +60,7 @@ const TasksContainer = ({ data }) => {
               id='task-filter'
               value={filter}
               onChange={(e) => handleFilterChange(e.target.value)}
-              className='border-2 border-blue-300 rounded-md px-3 py-2'
+              className='border-2 border-blue-300 rounded-md px-3 py-2 w-auto md:w-auto'
             >
               <option value='all'>All Tasks</option>
               <option value='active'>Active Tasks</option>
@@ -69,7 +69,7 @@ const TasksContainer = ({ data }) => {
           </div>
           <button
             onClick={handleRemoveCompleted}
-            className='bg-green-500 hover:bg-red-600 text-white font-semibold px-4 py-2 rounded-md'
+            className='bg-[#0B4582] hover:bg-red-600 text-white font-semibold px-4 py-2 rounded-md w-auto md:w-auto'
           >
             Remove Completed Tasks
           </button>

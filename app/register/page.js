@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { toast } from 'react-toastify'
 import { registerUser } from '../api/register'
 import Link from 'next/link'
+import { ValidateInputs } from '@/util/Validation'
 
 const initialState = {
   name: '',
@@ -18,14 +19,6 @@ export default function RegisterForm() {
   const [formErrors, setFormErrors] = useState({})
   const router = useRouter()
 
-  const labelStyles = 'block text-grey-700 font-medium mb-2'
-  const inputStyles = 'w-full px-3 py-2 border border-gray-300 rounded-md'
-  const buttonsStyles =
-    'w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600'
-
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/
-
   const handleChange = (e) => {
     const { name, value } = e.target
     setValues({ ...values, [name]: value })
@@ -35,17 +28,8 @@ export default function RegisterForm() {
     e.preventDefault()
     setLoading(true)
 
-    const { name, email, password } = values
-    const errors = {}
-
-    if (!emailRegex.test(email)) {
-      errors.email = 'Please enter a valid email address.'
-    }
-
-    if (!passwordRegex.test(password)) {
-      errors.password =
-        'Password must be at least 6 characters long and contain both uppercase and lowercase letters.'
-    }
+    //Input validation on submit
+    const errors = ValidateInputs(values)
 
     if (Object.keys(errors).length > 0) {
       setFormErrors(errors)
@@ -54,13 +38,16 @@ export default function RegisterForm() {
     }
 
     try {
-      const result = await registerUser(name, email, password) // Register user
+      const result = await registerUser(
+        values.name,
+        values.email,
+        values.password
+      )
       if (result?.error) {
         return
       }
       toast.success('Redirecting to login')
-      router.push('/login') // Redirect to login after successful registration
-      // }
+      router.push('/login')
     } catch (err) {
       toast.error(err.message || 'Registration failed')
     } finally {
@@ -75,7 +62,10 @@ export default function RegisterForm() {
       </h2>
       <form onSubmit={handleSubmit} className='space-y-4'>
         <div className='mb-3'>
-          <label htmlFor='name' className={labelStyles}>
+          <label
+            htmlFor='name'
+            className='block text-grey-700 font-medium mb-2'
+          >
             Name
           </label>
           <input
@@ -83,12 +73,15 @@ export default function RegisterForm() {
             name='name'
             value={values.name}
             onChange={handleChange}
-            className={inputStyles}
+            className='w-full px-3 py-2 border border-gray-300 rounded-md'
             required
           />
         </div>
         <div className='mb-3'>
-          <label htmlFor='email' className={labelStyles}>
+          <label
+            htmlFor='email'
+            className='block text-grey-700 font-medium mb-2'
+          >
             Email
           </label>
           <input
@@ -96,7 +89,7 @@ export default function RegisterForm() {
             name='email'
             value={values.email}
             onChange={handleChange}
-            className={inputStyles}
+            className='w-full px-3 py-2 border border-gray-300 rounded-md'
             required
           />
           {formErrors.email && (
@@ -104,7 +97,10 @@ export default function RegisterForm() {
           )}
         </div>
         <div className='mb-3'>
-          <label htmlFor='password' className={labelStyles}>
+          <label
+            htmlFor='password'
+            className='block text-grey-700 font-medium mb-2'
+          >
             Password
           </label>
           <input
@@ -112,23 +108,27 @@ export default function RegisterForm() {
             name='password'
             value={values.password}
             onChange={handleChange}
-            className={inputStyles}
+            className='w-full px-3 py-2 border border-gray-300 rounded-md'
             required
           />
           {formErrors.password && (
             <p className='text-red-500 text-sm'>{formErrors.password}</p>
           )}
         </div>
-        <button type='submit' className={buttonsStyles} disabled={loading}>
+        <button
+          type='submit'
+          className='w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600'
+          disabled={loading}
+        >
           {loading ? 'Submitting...' : 'Submit'}
         </button>
         <p>
-          Already a member.?{' '}
+          Already a member?{' '}
           <Link href='/login'>
-            <span className='text-blue-800 hover:text-blue-500  font-semibold  '>
+            <span className='text-blue-800 hover:text-blue-500 font-semibold'>
               Login
             </span>
-          </Link>{' '}
+          </Link>
         </p>
       </form>
     </div>

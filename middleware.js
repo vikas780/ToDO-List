@@ -23,7 +23,7 @@ export async function middleware(req) {
   // Redirect authenticated users away from public paths
   if (isPublicPath && token) {
     // console.log('Redirecting authenticated user to home page.')
-    return NextResponse.redirect(new URL('/', req.url))
+    return NextResponse.redirect(new URL('/tasks', req.url))
   }
 
   // Redirect unauthenticated users to login from private paths

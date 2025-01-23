@@ -9,6 +9,7 @@ const defaultState = {
   isLoading: true,
   deleteStatus: '',
   createStatus: '',
+  updateStatus: '',
 }
 
 // Async thunk for deleting a task
@@ -64,6 +65,28 @@ export const createTask = createAsyncThunk(
   }
 )
 
+export const updateTask = createAsyncThunk(
+  'task/editTask',
+  async ({ taskId, task, token }, thunkAPI) => {
+    try {
+      const response = await axios.put(
+        `https://todos-api-aeaf.onrender.com/api/v1/todo/update?id=${taskId}`,
+        task,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      return response.data
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.msg || 'Failed to update task'
+      )
+    }
+  }
+)
+
 const TaskSlice = createSlice({
   name: 'Task',
   initialState: defaultState,
@@ -96,6 +119,17 @@ const TaskSlice = createSlice({
     })
     builder.addCase(createTask.rejected, (state, action) => {
       state.createStatus = 'Failed to create'
+      toast.error(action.payload)
+    })
+    builder.addCase(updateTask.pending, (state) => {
+      state.updateStatus = 'Updating...'
+    })
+    builder.addCase(updateTask.fulfilled, (state) => {
+      state.updateStatus = 'Updated'
+      toast.success('Task Updated')
+    })
+    builder.addCase(updateTask.rejected, (state, action) => {
+      state.updateStatus = 'Failed'
       toast.error(action.payload)
     })
   },
