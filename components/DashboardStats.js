@@ -56,6 +56,7 @@ const DashboardStats = ({ data }) => {
           <Link
             href={'/tasks'}
             className='bg-gray-700 hover:bg-gray-500 text-white font-normal p-2 rounded-md'
+            aria-label='Show Tasks'
           >
             Show Tasks
           </Link>
