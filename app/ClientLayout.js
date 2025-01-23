@@ -4,13 +4,16 @@
 import { ToastProvider } from '@/components/ToastContainer'
 import { SessionProvider } from 'next-auth/react'
 import { ReduxProvider } from '@/ReduxProvider'
+import { DarkTheme } from './DarkTheme'
 
 export default function ClientLayout({ children }) {
   return (
-    <ReduxProvider>
-      <SessionProvider>
-        <ToastProvider>{children}</ToastProvider>
-      </SessionProvider>
-    </ReduxProvider>
+    <DarkTheme>
+      <ReduxProvider>
+        <SessionProvider>
+          <ToastProvider>{children}</ToastProvider>
+        </SessionProvider>
+      </ReduxProvider>
+    </DarkTheme>
   )
 }

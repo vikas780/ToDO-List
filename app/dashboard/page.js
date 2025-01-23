@@ -1,8 +1,8 @@
 import { getServerSession } from 'next-auth'
-import { authOptions } from '../api/auth/[...nextauth]/options'
-import Shimmer from './loading'
+import DashboardShimmer from './loading'
 import axios from 'axios'
-import TasksContainer from '@/components/TasksContainer'
+import DashboardStats from '@/components/DashboardStats'
+import { authOptions } from '../api/auth/[...nextauth]/options'
 
 async function AllTasks() {
   let data = []
@@ -36,7 +36,7 @@ async function AllTasks() {
   // }
 
   if (!data) {
-    return <Shimmer />
+    return <DashboardShimmer />
   }
 
   return (
@@ -44,7 +44,7 @@ async function AllTasks() {
       {error ? (
         <div className='text-center text-red-600 text-lg'>{error}</div>
       ) : (
-        <TasksContainer data={data} token={token} />
+        <DashboardStats data={data} />
       )}
     </>
   )

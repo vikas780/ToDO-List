@@ -5,12 +5,17 @@ import ShowAllTasks from './ShowAllTasks'
 import SearchBar from './SearchBar'
 import { filterAndSortTasks } from '@/util/FilterLogic'
 import Link from 'next/link'
+import { useDispatch, useSelector } from 'react-redux'
+import { createTask, clearDeletedTask } from '@/features/tasks/TaskSlice'
+import { useRouter } from 'next/navigation'
 
-const TasksContainer = ({ data }) => {
+const TasksContainer = ({ data, token }) => {
   const [searchQuery, setSearchQuery] = useState('')
   const [tasks, setTasks] = useState(data)
   const [filter, setFilter] = useState('all') // Default filter is 'all'
-
+  const { lastDeletedTask } = useSelector((state) => state.Task)
+  const dispatch = useDispatch()
+  const router = useRouter()
   // Handle search queries
   const handleSearch = (query) => {
     setSearchQuery(query)
@@ -40,11 +45,41 @@ const TasksContainer = ({ data }) => {
     setTasks(updatedTasks)
   }
 
+  const handleUndo = async () => {
+    if (lastDeletedTask) {
+      // Optimistically update the tasks state
+      setTasks((prevTasks) => [lastDeletedTask, ...(prevTasks || [])])
+
+      const { name, description, status } = lastDeletedTask
+
+      try {
+        // Dispatch the action to create the task and wait for the response
+        const createdTask = await dispatch(
+          createTask({ task: { name, description, status }, token })
+        ).unwrap()
+        window.location.reload()
+        // Redirect to the newly created task's page
+      } catch (error) {
+        console.error('Failed to restore the task:', error)
+
+        // Revert the optimistic update if the API call fails
+        setTasks((prevTasks) =>
+          prevTasks.filter((task) => task._id !== lastDeletedTask.id)
+        )
+      }
+
+      // Clear the deleted task from state after handling undo
+      dispatch(clearDeletedTask())
+    }
+  }
+
   return (
     <section>
       <div className='p-4 mx-auto lg:max-w-[87rem] sm:max-w-full mb-16'>
         <header>
-          <p className='text-4xl font-bold text-gray-800 mb-12'>All Tasks</p>
+          <p className='text-4xl font-bold text-gray-800 mb-12 dark:text-white'>
+            All Tasks
+          </p>
         </header>
 
         {/* Search Bar */}
@@ -75,18 +110,31 @@ const TasksContainer = ({ data }) => {
           </button>
         </div>
 
-        <div className='mt-8'>
-          <Link
-            href={'tasks/create'}
-            className='bg-gray-700 hover:bg-gray-500 text-white font-semibold px-4 py-2 rounded-md'
-          >
-            Add Task
-          </Link>
+        <div className='mt-4 flex flex-col sm:flex-row md:flex-row items-start gap-2 md:gap-6 md:justify-between'>
+          {lastDeletedTask && (
+            <div className='mt-4 flex-1'>
+              <button
+                onClick={handleUndo}
+                className='bg-red-500 hover:bg-red-800 text-white font-semibold px-4 py-2 rounded-md w-auto md:w-auto'
+              >
+                Undo Last Delete
+              </button>
+            </div>
+          )}
+
+          <div className='mt-8'>
+            <Link
+              href={'tasks/create'}
+              className='bg-gray-700 hover:bg-gray-500 text-white font-semibold px-4 py-2 rounded-md'
+            >
+              Add Task
+            </Link>
+          </div>
         </div>
 
         {/* Task Lists */}
         <header>
-          <h3 className='text-2xl font-semibold text-gray-800 mb-8 mt-8'>
+          <h3 className='text-2xl font-semibold text-gray-800 mb-8 mt-8 dark:text-white'>
             {filter === 'all'
               ? 'All Tasks:'
               : filter === 'active'
@@ -106,13 +154,11 @@ const TasksContainer = ({ data }) => {
               filteredTasks
                 .filter((item) => item.status === false)
                 .map((task) => (
-                  <article key={task._id}>
-                    <ShowAllTasks
-                      key={task._id}
-                      {...task}
-                      toggleComplete={toggleComplete}
-                    />
-                  </article>
+                  <ShowAllTasks
+                    key={task._id}
+                    {...task}
+                    toggleComplete={toggleComplete}
+                  />
                 ))
             )}
           </div>
@@ -122,13 +168,11 @@ const TasksContainer = ({ data }) => {
             {filteredTasks
               .filter((item) => item.status === true)
               .map((task) => (
-                <article key={task._id}>
-                  <ShowAllTasks
-                    key={task._id}
-                    {...task}
-                    toggleComplete={toggleComplete}
-                  />
-                </article>
+                <ShowAllTasks
+                  key={task._id}
+                  {...task}
+                  toggleComplete={toggleComplete}
+                />
               ))}
           </div>
         </main>

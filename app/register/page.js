@@ -66,7 +66,7 @@ export default function RegisterForm() {
             htmlFor='name'
             className='block text-grey-700 font-medium mb-2'
           >
-            Name
+            Username
           </label>
           <input
             type='text'

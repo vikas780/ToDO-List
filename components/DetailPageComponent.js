@@ -1,15 +1,43 @@
 'use client'
-import React from 'react'
+import React, { useState } from 'react'
 import Image from 'next/image'
 import details from '@/public/details.svg'
 import Link from 'next/link'
 import { FaEdit, FaTrashAlt } from 'react-icons/fa'
-import { deleteTask } from '@/features/tasks/TaskSlice'
+import { deleteTask, storeDeletedTask } from '@/features/tasks/TaskSlice'
 import { useDispatch, useSelector } from 'react-redux'
+import { useRouter } from 'next/navigation'
 
 const DetailPageComponent = ({ task, token }) => {
+  const router = useRouter()
   const dispatch = useDispatch()
   const { deleteStatus } = useSelector((state) => state.Task)
+  const [afterDelete, setAfterDelete] = useState(task)
+
+  const handleDelete = async () => {
+    dispatch(
+      storeDeletedTask({
+        name: task.name,
+        description: task.description,
+        status: task.status,
+        id: task._id,
+      })
+    )
+    await dispatch(deleteTask({ taskId: task._id, token })).unwrap()
+    setAfterDelete(null)
+    router.push('/tasks')
+
+    // const updatedTasks = task.filter((t) => t._id !== task._id)
+    // setAfterDelete(updatedTasks)
+  }
+  if (!afterDelete) {
+    return (
+      <h3 className='text-center text-gray-700 dark:text-gray-300'>
+        Task has been deleted or is no longer available.
+      </h3>
+    )
+  }
+
   return (
     <div className='p-4 lg:max-w-5xl max-w-lg mx-auto mt-20'>
       <div className='grid items-start grid-cols-1 lg:grid-cols-2 gap-6 max-lg:gap-12'>
@@ -28,16 +56,16 @@ const DetailPageComponent = ({ task, token }) => {
           <div className='mt-4'>
             <h3
               id='task-description'
-              className='text-xl font-bold text-gray-800'
+              className='text-xl font-bold text-gray-800 dark:text-gray-200'
             >
               Task Description:
             </h3>
             <p
               id='task-desc-text'
-              className='mt-4 leading-0 tracking-wider min-h-36'
+              className='mt-4 leading-0 tracking-wider min-h-36 text-gray-700 dark:text-gray-300'
               aria-describedby='task-description'
             >
-              {task?.description || 'No description available.'}
+              {afterDelete?.description || 'No description available.'}
             </p>
           </div>
 
@@ -46,27 +74,24 @@ const DetailPageComponent = ({ task, token }) => {
               <button
                 type='button'
                 aria-label='Edit task'
-                className='flex  w-full  items-center justify-center gap-2 px-6 py-3 bg-slate-700 hover:bg-slate-900 text-white text-sm font-semibold rounded-md transition-all'
+                className='flex w-full items-center justify-center gap-2 px-6 py-3 bg-slate-700 hover:bg-slate-900 text-white text-sm font-semibold rounded-md transition-all dark:bg-slate-800 dark:hover:bg-slate-700'
               >
                 <FaEdit />
                 Edit Task
               </button>
             </Link>
-
-            <Link href='/tasks'>
+            <div>
               <button
                 type='button'
                 aria-label='Delete task'
-                className='flex w-full items-center justify-center gap-2 px-6 py-3 bg-red-500 hover:bg-red-700 text-white text-sm font-semibold rounded-md transition-all'
-                onClick={() =>
-                  dispatch(deleteTask({ taskId: task._id, token }))
-                }
+                className='flex w-full items-center justify-center gap-2 px-6 py-3 bg-red-500 hover:bg-red-700 text-white text-sm font-semibold rounded-md transition-all dark:bg-red-600 dark:hover:bg-red-800'
+                onClick={handleDelete}
                 disabled={deleteStatus === 'Deleting...'}
               >
                 <FaTrashAlt />
                 {deleteStatus === 'Deleting...' ? 'Deleting...' : 'Delete Task'}
               </button>
-            </Link>
+            </div>
           </div>
         </div>
       </div>

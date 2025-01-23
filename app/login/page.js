@@ -8,6 +8,7 @@ import { toast } from 'react-toastify'
 import { setToken } from '@/features/auth/AuthSlice'
 import { useDispatch } from 'react-redux'
 import { ValidateInputs } from '@/util/Validation'
+import { setUserName } from '@/features/tasks/TaskSlice'
 
 const initialState = {
   email: '',
@@ -46,11 +47,12 @@ export default function LoginForm() {
         password: values.password,
         redirect: false,
       })
-
+      console.log('Result from login', result)
       if (result?.ok) {
         if (result.token) {
           dispatch(setToken(result.token))
         }
+
         toast.success('Redirecting to Tasks')
         router.push('/tasks')
       } else {

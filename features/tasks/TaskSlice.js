@@ -10,6 +10,7 @@ const defaultState = {
   deleteStatus: '',
   createStatus: '',
   updateStatus: '',
+  lastDeletedTask: null,
 }
 
 // Async thunk for deleting a task
@@ -42,8 +43,6 @@ export const deleteTask = createAsyncThunk(
 export const createTask = createAsyncThunk(
   'task/createTask',
   async ({ task, token }, thunkAPI) => {
-    console.log('Token in createTask:', token)
-
     try {
       const response = await axios.post(
         'https://todos-api-aeaf.onrender.com/api/v1/todo/create',
@@ -55,7 +54,7 @@ export const createTask = createAsyncThunk(
           },
         }
       )
-      console.log(response.data)
+
       return response.data
     } catch (error) {
       return thunkAPI.rejectWithValue(
@@ -97,6 +96,13 @@ const TaskSlice = createSlice({
     hideLoading: (state) => {
       state.isLoading = false
     },
+    storeDeletedTask: (state, action) => {
+      state.lastDeletedTask = action.payload // Store the deleted task
+    },
+
+    clearDeletedTask: (state) => {
+      state.lastDeletedTask = null // Clear the stored task
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(deleteTask.pending, (state) => {
@@ -135,5 +141,6 @@ const TaskSlice = createSlice({
   },
 })
 
-export const { showLoading, hideLoading } = TaskSlice.actions
+export const { showLoading, hideLoading, storeDeletedTask, clearDeletedTask } =
+  TaskSlice.actions
 export default TaskSlice.reducer

@@ -79,10 +79,10 @@ const AddTask = ({ taskToEdit = null }) => {
   }
 
   return (
-    <section className='flex items-center justify-center min-h-screen'>
-      <div className='relative w-full max-w-lg bg-white shadow-lg rounded-lg p-8 z-10 mb-10'>
+    <section className='flex items-center justify-center min-h-screen  dark:bg-gray-900'>
+      <div className='relative w-full max-w-lg bg-white dark:bg-gray-800 shadow-lg rounded-lg p-8 z-10 mb-10'>
         <header className='text-center mb-6'>
-          <h2 className='text-2xl font-extrabold text-gray-800'>
+          <h2 className='text-2xl font-extrabold text-gray-800 dark:text-gray-200'>
             {taskToEdit ? 'Edit Task' : 'Add a New Task'}
           </h2>
         </header>
@@ -97,7 +97,7 @@ const AddTask = ({ taskToEdit = null }) => {
           <div className='flex flex-col'>
             <label
               htmlFor='name'
-              className='text-lg font-semibold text-gray-800'
+              className='text-lg font-semibold text-gray-800 dark:text-gray-200'
             >
               Task Name
             </label>
@@ -105,7 +105,7 @@ const AddTask = ({ taskToEdit = null }) => {
               type='text'
               id='name'
               name='name'
-              className={`mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 ${
+              className={`mt-1 p-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 ${
                 errors.name ? 'border-red-500' : ''
               }`}
               value={task.name}
@@ -125,14 +125,14 @@ const AddTask = ({ taskToEdit = null }) => {
           <div className='flex flex-col'>
             <label
               htmlFor='description'
-              className='text-lg font-semibold text-gray-800'
+              className='text-lg font-semibold text-gray-800 dark:text-gray-200'
             >
               Task Description
             </label>
             <textarea
               id='description'
               name='description'
-              className={`mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 ${
+              className={`mt-1 p-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 ${
                 errors.description ? 'border-red-500' : ''
               }`}
               value={task.description}
@@ -161,7 +161,7 @@ const AddTask = ({ taskToEdit = null }) => {
               <input
                 type='checkbox'
                 id='status'
-                className='w-5 h-5 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500'
+                className='w-5 h-5 text-indigo-600 dark:text-indigo-400 border-gray-300 dark:border-gray-600 rounded focus:ring-indigo-500'
                 checked={task.status}
                 onChange={(e) => setTask({ ...task, status: e.target.checked })}
                 aria-labelledby='status-label'
@@ -169,7 +169,7 @@ const AddTask = ({ taskToEdit = null }) => {
               <label
                 htmlFor='status'
                 id='status-label'
-                className='text-lg text-gray-800'
+                className='text-lg text-gray-800 dark:text-gray-200'
               >
                 Mark as Completed
               </label>
@@ -180,7 +180,7 @@ const AddTask = ({ taskToEdit = null }) => {
           <div className='flex flex-col gap-3 justify-center'>
             <button
               type='submit'
-              className='w-full py-2 px-4 bg-indigo-600 text-white font-medium rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50'
+              className='w-full py-2 px-4 bg-indigo-600 dark:bg-indigo-500 text-white font-medium rounded-md hover:bg-indigo-700 dark:hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50'
             >
               {taskToEdit
                 ? updateStatus === 'Updating...'
@@ -193,7 +193,7 @@ const AddTask = ({ taskToEdit = null }) => {
             <Link href='/tasks'>
               <button
                 type='button'
-                className='w-full py-2 px-4 bg-teal-600 text-white font-medium rounded-md hover:bg-teal-800 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50'
+                className='w-full py-2 px-4 bg-teal-600 dark:bg-teal-500 text-white font-medium rounded-md hover:bg-teal-800 dark:hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50'
               >
                 Back to All tasks
               </button>
