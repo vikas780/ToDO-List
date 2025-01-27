@@ -19,7 +19,6 @@ async function AllTasks() {
 
     const response = await axios(
       'https://todos-api-aeaf.onrender.com/api/v1/todo/getAll',
-
       {
         headers: {
           Authorization: `Bearer ${session.user.token}`,

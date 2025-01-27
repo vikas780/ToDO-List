@@ -20,7 +20,6 @@ const TaskDetailsPage = async ({ params }) => {
 
     const response = await axios.get(
       `https://todos-api-aeaf.onrender.com/api/v1/todo/getById?id=${id}`,
-
       {
         headers: {
           Authorization: `Bearer ${session.user.token}`,
