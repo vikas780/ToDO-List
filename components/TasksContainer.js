@@ -17,9 +17,6 @@ const TasksContainer = ({ data, token }) => {
   const dispatch = useDispatch()
   const router = useRouter()
 
-  useEffect(() => {
-    setTasks(data)
-  }, [data])
   // Handle search queries
   const handleSearch = (query) => {
     setSearchQuery(query)
