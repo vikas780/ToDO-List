@@ -1,6 +1,6 @@
 'use client'
 export const dynamic = 'force-dynamic'
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import ShowAllTasks from './ShowAllTasks'
 import SearchBar from './SearchBar'
 import { filterAndSortTasks } from '@/util/FilterLogic'
@@ -16,6 +16,10 @@ const TasksContainer = ({ data, token }) => {
   const { lastDeletedTask } = useSelector((state) => state.Task)
   const dispatch = useDispatch()
   const router = useRouter()
+
+  useEffect(() => {
+    setTasks(data)
+  }, [data])
   // Handle search queries
   const handleSearch = (query) => {
     setSearchQuery(query)
