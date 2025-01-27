@@ -6,17 +6,6 @@
     "no-unused-expressions": "warn",
     "no-extra-semi": "warn"
   },
-  "overrides": [
-    {
-      "files": ["*.js", "*.mjs"],
-      "parser": "espree",
-      "parserOptions": {
-        "babelOptions": {
-          "presets": ["require.resolve('next/babel')"]
-        }
-      }
-    }
-  ],
   "env": {
     "browser": true,
     "es6": true
