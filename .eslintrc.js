@@ -4,12 +4,11 @@ module.exports = {
     ecmaVersion: 2021,
     sourceType: 'module',
   },
+
   rules: {
-    rules: {
-      'no-undef': 'error',
-      'no-unused-vars': 'warn',
-      'no-unused-expressions': 'warn',
-      'no-extra-semi': 'warn',
-    },
+    'no-undef': 'error',
+    'no-unused-vars': 'warn',
+    'no-unused-expressions': 'warn',
+    'no-extra-semi': 'warn',
   },
 }
