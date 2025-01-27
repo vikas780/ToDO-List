@@ -1,5 +1,5 @@
+export const dynamic = 'force-dynamic'
 import axios from 'axios'
-
 import { getServerSession } from 'next-auth'
 import AddTask from '../../create/page'
 import { authOptions } from '@/app/api/auth/[...nextauth]/options'

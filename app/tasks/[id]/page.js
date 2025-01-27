@@ -1,5 +1,5 @@
+export const dynamic = 'force-dynamic'
 import axios from 'axios'
-
 import { getServerSession } from 'next-auth'
 import { authOptions } from '../../api/auth/[...nextauth]/options'
 import DetailPageComponent from '@/components/DetailPageComponent'
