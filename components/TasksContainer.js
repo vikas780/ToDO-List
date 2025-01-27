@@ -1,5 +1,5 @@
 'use client'
-
+export const dynamic = 'force-dynamic'
 import React, { useMemo, useState } from 'react'
 import ShowAllTasks from './ShowAllTasks'
 import SearchBar from './SearchBar'
