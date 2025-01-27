@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic'
 import { getServerSession } from 'next-auth'
 import DashboardShimmer from './loading'
 import axios from 'axios'
