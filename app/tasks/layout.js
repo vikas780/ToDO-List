@@ -1,5 +1,5 @@
 'use client'
-
+export const dynamic = 'force-dynamic'
 import { signOut } from 'next-auth/react'
 import Link from 'next/link'
 import ThemeSwitcher from '@/components/ThemeSwitcher'
