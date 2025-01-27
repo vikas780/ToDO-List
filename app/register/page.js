@@ -6,6 +6,7 @@ import { toast } from 'react-toastify'
 import { registerUser } from '../api/register'
 import Link from 'next/link'
 import { ValidateInputs } from '@/util/Validation'
+import { signIn } from 'next-auth/react'
 
 const initialState = {
   name: '',
@@ -43,11 +44,22 @@ export default function RegisterForm() {
         values.email,
         values.password
       )
+
       if (result?.error) {
         return
       }
-      toast.success('Redirecting to login')
-      router.push('/login')
+      // Automatic login because the token is created while signIn
+      const Loginresult = await signIn('credentials', {
+        email: values.email,
+        password: values.password,
+        redirect: false,
+      })
+      if (Loginresult?.ok) {
+        toast.success('Redirecting to tasks')
+        router.push('/tasks')
+      } else {
+        toast.error(Loginresult.error || 'Failed login')
+      }
     } catch (err) {
       toast.error(err.message || 'Registration failed')
     } finally {
