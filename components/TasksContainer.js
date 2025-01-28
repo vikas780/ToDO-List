@@ -1,5 +1,5 @@
 'use client'
-
+export const dynamic = 'force-dynamic'
 import React, { useEffect, useMemo, useState } from 'react'
 import ShowAllTasks from './ShowAllTasks'
 import SearchBar from './SearchBar'
@@ -7,7 +7,6 @@ import { filterAndSortTasks } from '@/util/FilterLogic'
 import Link from 'next/link'
 import { useDispatch, useSelector } from 'react-redux'
 import { createTask, clearDeletedTask } from '@/features/tasks/TaskSlice'
-import { useRouter } from 'next/navigation'
 
 const TasksContainer = ({ data, token }) => {
   const [searchQuery, setSearchQuery] = useState('')
@@ -15,8 +14,10 @@ const TasksContainer = ({ data, token }) => {
   const [filter, setFilter] = useState('all') // Default filter is 'all'
   const { lastDeletedTask } = useSelector((state) => state.Task)
   const dispatch = useDispatch()
-  const router = useRouter()
 
+  useEffect(() => {
+    setTasks(data)
+  }, [data])
   // Handle search queries
   const handleSearch = (query) => {
     setSearchQuery(query)
@@ -52,7 +53,7 @@ const TasksContainer = ({ data, token }) => {
 
       try {
         // Dispatch the action to create the task and wait for the response
-        const createdTask = await dispatch(
+        await dispatch(
           createTask({ task: { name, description, status }, token })
         ).unwrap()
         window.location.reload()

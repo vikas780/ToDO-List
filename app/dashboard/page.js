@@ -8,7 +8,7 @@ import { authOptions } from '../api/auth/[...nextauth]/options'
 async function AllTasks() {
   let data = []
   let error = null
-  let token = null
+
   try {
     // Get the server-side session
     const session = await getServerSession(authOptions)
@@ -25,7 +25,7 @@ async function AllTasks() {
         },
       }
     )
-    token = session.user.token
+
     data = response.data
   } catch (err) {
     error =
