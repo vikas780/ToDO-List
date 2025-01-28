@@ -1,6 +1,8 @@
 export const ValidateInputs = (inputs) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
   const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/
+
+  //Object to store errors
   const errors = {}
 
   if (inputs.email && !emailRegex.test(inputs.email)) {
