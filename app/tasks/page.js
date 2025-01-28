@@ -6,8 +6,8 @@ import axios from 'axios'
 import TasksContainer from '@/components/TasksContainer'
 import { unstable_noStore } from 'next/cache'
 
-let data = []
 async function AllTasks() {
+  let data = []
   let error = null
   let token = null
 
