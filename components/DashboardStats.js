@@ -4,7 +4,6 @@ import { MdOutlinePendingActions } from 'react-icons/md'
 import StatsItem from '@/components/StatsItem'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
 
 const DashboardStats = ({ data }) => {
   const { data: session, status } = useSession()
