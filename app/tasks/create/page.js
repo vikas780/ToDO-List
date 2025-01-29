@@ -192,14 +192,17 @@ const AddTask = ({ taskToEdit = null }) => {
                 ? 'Creating...'
                 : 'Create Task'}
             </button>
-            <Link href='/tasks'>
-              <button
-                type='button'
-                className='w-full py-2 px-4 bg-teal-600 dark:bg-teal-500 text-white font-medium rounded-md hover:bg-teal-800 dark:hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50'
-              >
-                Back to All tasks
-              </button>
-            </Link>
+
+            <button
+              type='button'
+              onClick={() => {
+                router.push('/tasks')
+                router.refresh()
+              }}
+              className='w-full py-2 px-4 bg-teal-600 dark:bg-teal-500 text-white font-medium rounded-md hover:bg-teal-800 dark:hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50'
+            >
+              Back to All tasks
+            </button>
           </div>
         </form>
       </div>
