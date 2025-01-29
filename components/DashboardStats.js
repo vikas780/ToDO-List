@@ -4,8 +4,10 @@ import { MdOutlinePendingActions } from 'react-icons/md'
 import StatsItem from '@/components/StatsItem'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 const DashboardStats = ({ data }) => {
+  const router = useRouter()
   const { data: session, status } = useSession()
   let active = data.filter((task) => !task.status)
   let completed = data.filter((task) => task.status)
@@ -38,7 +40,10 @@ const DashboardStats = ({ data }) => {
       bcg: 'bg-orange-200',
     },
   ]
-
+  const handleSubmit = async () => {
+    await router.push('/tasks')
+    router.refresh()
+  }
   return (
     <section>
       <div className='flex flex-col md:flex-row justify-between  p-3 md:mb-8 mt-2'>
@@ -49,13 +54,13 @@ const DashboardStats = ({ data }) => {
           </span>
         </h2>
         <div className='flex items-center gap-2'>
-          <Link
-            href={'/tasks'}
+          <button
+            onClick={handleSubmit}
             className='bg-gray-700 hover:bg-gray-500 text-white font-normal p-2 rounded-md'
             aria-label='Show Tasks'
           >
             Show Tasks
-          </Link>
+          </button>
         </div>
       </div>
       <div className='grid gap-6 md:grid-cols-2 xl:grid-cols-3 p-2'>
