@@ -2,7 +2,6 @@ export const dynamic = 'force-dynamic'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '../api/auth/[...nextauth]/options'
 import Shimmer from './loading'
-import axios from 'axios'
 import TasksContainer from '@/components/TasksContainer'
 
 async function AllTasks() {
@@ -18,18 +17,17 @@ async function AllTasks() {
       throw new Error('Unauthorized. Please login first.')
     }
 
-    const response = await axios(
+    const response = await fetch(
       'https://todos-api-aeaf.onrender.com/api/v1/todo/getAll',
       {
         headers: {
           Authorization: `Bearer ${session.user.token}`,
-          'Cache-Control': 'no-cache, no-store, must-revalidate',
-          Pragma: 'no-cache',
         },
+        cache: 'no-store',
       }
     )
     token = session.user.token
-    data = response.data
+    data = await response.json()
   } catch (err) {
     error =
       'Failed to load tasks. Please check your internet connection or try again later.'
