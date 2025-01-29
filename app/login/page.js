@@ -1,6 +1,6 @@
 'use client'
 
-import { signIn } from 'next-auth/react'
+import { getSession, signIn } from 'next-auth/react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -46,10 +46,12 @@ export default function LoginForm() {
         password: values.password,
         redirect: false,
       })
-      console.log('Result from login', result)
+
       if (result?.ok) {
-        if (result.token) {
-          dispatch(setToken(result.token))
+        const session = await getSession()
+        // Sending token to AuthSlice
+        if (session?.user?.token) {
+          dispatch(setToken(session.user.token))
         }
 
         toast.success('Redirecting to Tasks')

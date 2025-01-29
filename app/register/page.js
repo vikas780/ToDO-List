@@ -6,7 +6,9 @@ import { toast } from 'react-toastify'
 import { registerUser } from '../api/register'
 import Link from 'next/link'
 import { ValidateInputs } from '@/util/Validation'
-import { signIn } from 'next-auth/react'
+import { getSession, signIn } from 'next-auth/react'
+import { useDispatch } from 'react-redux'
+import { setToken } from '@/features/auth/AuthSlice'
 
 const initialState = {
   name: '',
@@ -15,6 +17,7 @@ const initialState = {
 }
 
 export default function RegisterForm() {
+  const dispatch = useDispatch()
   const [values, setValues] = useState(initialState)
   const [loading, setLoading] = useState(false)
   const [formErrors, setFormErrors] = useState({})
@@ -55,6 +58,11 @@ export default function RegisterForm() {
         redirect: false,
       })
       if (Loginresult?.ok) {
+        const session = await getSession()
+        // Sending token to AuthSlice
+        if (session?.user?.token) {
+          dispatch(setToken(session.user.token))
+        }
         toast.success('Redirecting to tasks')
         router.push('/tasks')
       } else {
