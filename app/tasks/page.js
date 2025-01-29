@@ -4,14 +4,11 @@ import { authOptions } from '../api/auth/[...nextauth]/options'
 import Shimmer from './loading'
 import axios from 'axios'
 import TasksContainer from '@/components/TasksContainer'
-import { unstable_noStore } from 'next/cache'
 
 async function AllTasks() {
   let data = []
   let error = null
   let token = null
-
-  unstable_noStore()
 
   try {
     // Get the server-side session
@@ -26,6 +23,8 @@ async function AllTasks() {
       {
         headers: {
           Authorization: `Bearer ${session.user.token}`,
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          Pragma: 'no-cache',
         },
       }
     )
