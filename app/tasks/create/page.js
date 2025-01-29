@@ -71,7 +71,9 @@ const AddTask = ({ taskToEdit = null }) => {
       } else {
         // Create New Task
         await dispatch(createTask({ task, token })).unwrap()
-        router.push('/tasks')
+        router.refresh()
+        await router.push('/tasks')
+        router.refresh()
       }
     } catch (error) {
       console.error('Error:', error)
