@@ -50,10 +50,11 @@ const TasksContainer = ({ data, token }) => {
 
       try {
         // Dispatch the action to create the task and wait for the response
-        await dispatch(
+        const created = await dispatch(
           createTask({ task: { name, description, status }, token })
         ).unwrap()
-        window.location.reload()
+        //window.location.reload()
+        setTasks([...tasks, created])
       } catch (error) {
         console.error('Failed to restore the task:', error)
       }

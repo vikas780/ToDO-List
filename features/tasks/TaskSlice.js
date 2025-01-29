@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { toast } from 'react-toastify'
-import axios from 'axios'
-
+import apiClient from '@/util/ApiClient'
 const defaultState = {
   allTasks: [],
   totalTask: 0,
@@ -17,14 +16,7 @@ export const deleteTask = createAsyncThunk(
   'task/deleteTask',
   async ({ taskId, token }, thunkAPI) => {
     try {
-      const response = await axios.delete(
-        `https://todos-api-aeaf.onrender.com/api/v1/todo/delete?id=${taskId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
+      const response = await apiClient.delete(`/todo/delete?id=${taskId}`)
       return response.data
     } catch (error) {
       if (error.response?.status === 401) {
@@ -43,15 +35,10 @@ export const createTask = createAsyncThunk(
   'task/createTask',
   async ({ task, token }, thunkAPI) => {
     try {
-      const response = await axios.post(
-        'https://todos-api-aeaf.onrender.com/api/v1/todo/create',
+      const response = await apiClient.post(
+        '/todo/create',
 
-        task,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        task
       )
 
       return response.data
@@ -67,15 +54,7 @@ export const updateTask = createAsyncThunk(
   'task/editTask',
   async ({ taskId, task, token }, thunkAPI) => {
     try {
-      const response = await axios.put(
-        `https://todos-api-aeaf.onrender.com/api/v1/todo/update?id=${taskId}`,
-        task,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
+      const response = await apiClient.put(`/todo/update?id=${taskId}`, task)
       return response.data
     } catch (error) {
       return thunkAPI.rejectWithValue(
